@@ -2,6 +2,11 @@
 
 PERMISSION_ERROR="Check assets directory permissions & docker user or skip default assets install by setting the INIT_ASSETS env var to 0"
 
+if [[ -f "/www/assets/config-template.yml" ]]; then
+    echo "Found config.yml.template, converting to config.yml"
+    envsubst < /www/assets/config-template.yml > /www/assets/config.yml
+fi
+
 # Default assets & exemple configuration installation if possible.
 if [[ "${INIT_ASSETS}" == "1" ]] && [[ ! -f "/www/assets/config.yml" ]]; then
     echo "No configuration found, installing default config & assets"
